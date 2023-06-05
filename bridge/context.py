@@ -12,16 +12,22 @@ class ContextType(Enum):
     PATPAT = 21  # 拍了拍
 
     def __str__(self):
+        #
         return self.name
 
 
 class Context:
+
     def __init__(self, type: ContextType = None, content=None, kwargs=dict()):
-        self.type = type
-        self.content = content
-        self.kwargs = kwargs
+        #
+        self.type = type  # 消息类型
+
+        self.content = content  # 消息内容
+
+        self.kwargs = kwargs  # 其它参数
 
     def __contains__(self, key):
+
         if key == "type":
             return self.type is not None
         elif key == "content":
@@ -30,6 +36,7 @@ class Context:
             return key in self.kwargs
 
     def __getitem__(self, key):
+
         if key == "type":
             return self.type
         elif key == "content":
@@ -38,12 +45,14 @@ class Context:
             return self.kwargs[key]
 
     def get(self, key, default=None):
+
         try:
             return self[key]
         except KeyError:
             return default
 
     def __setitem__(self, key, value):
+
         if key == "type":
             self.type = value
         elif key == "content":
@@ -52,6 +61,7 @@ class Context:
             self.kwargs[key] = value
 
     def __delitem__(self, key):
+
         if key == "type":
             self.type = None
         elif key == "content":
@@ -60,4 +70,5 @@ class Context:
             del self.kwargs[key]
 
     def __str__(self):
+        #
         return "Context(type={}, content={}, kwargs={})".format(self.type, self.content, self.kwargs)
